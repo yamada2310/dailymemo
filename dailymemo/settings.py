@@ -122,9 +122,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 #ここから追加
-LOGIN_REDIRECT_URL = 'mycalendar/'
+LOGIN_REDIRECT_URL='calapp:mycalendar'
 
-LOGOUT_REDIRECT_URL = '/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
