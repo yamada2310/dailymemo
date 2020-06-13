@@ -3,8 +3,9 @@ from . import mixins
 from .models import Schedule
 import datetime
 from django.shortcuts import redirect
-from .forms import BS4ScheduleForm
+from .forms import BS4ScheduleForm,BS4ScheduleFormWithDate
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy 
 
 class MonthCalendar(mixins.MonthCalendarMixin, generic.TemplateView,LoginRequiredMixin):
     """月間カレンダーを表示するビュー"""
@@ -81,3 +82,13 @@ class MyCalendar(mixins.MonthCalendarMixin, mixins.WeekWithScheduleMixin, generi
         schedule.date = date
         schedule.save()
         return redirect('calapp:mycalendar', year=date.year, month=date.month, day=date.day)
+
+class ScheduleChange(generic.UpdateView,LoginRequiredMixin):
+    template_name = 'schedule_form.html'
+    model = Schedule
+    form_class = BS4ScheduleFormWithDate
+    success_url = '/mycalendar/'
+
+class ScheduleDelete(generic.DeleteView,LoginRequiredMixin):
+    model = Schedule
+    success_url = reverse_lazy('calapp:mycalendar')

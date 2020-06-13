@@ -1,0 +1,37 @@
+{% extends 'base_cal.html' %}
+
+{% block content %}
+    <a href="{{request.META.HTTP_REFERER}}">戻る</a>
+    <hr>
+    <form action="" method="POST">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">送信</button>
+    </form>
+    <hr>
+    <form action="{% url 'calapp:schedule_delete' schedule.pk %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">削除</button>
+    </form>
+
+{% endblock %}
+
+
+{% block extrajs %}
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/timedropper/1.0/timedropper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/timedropper/1.0/timedropper.min.js"></script>
+    <script>
+        $(function () {
+            // timedropper
+            $("#id_start_time").timeDropper({
+                format: "H:mm",
+                setCurrentTime: false,
+            });
+            $("#id_end_time").timeDropper({
+                format: "H:mm",
+                setCurrentTime: false,
+            });
+        });
+    </script>
+{% endblock %}

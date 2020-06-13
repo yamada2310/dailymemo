@@ -24,7 +24,7 @@
             <td>
                 {% for s in schedules %}
                     {{ s.start_time }} - {{ s.end_time }}<br>
-                    {{ s.summary }}<br>
+                    <p><a href="{% url 'calapp:schedule_change' s.pk %}">{{ s.summary }}</a></p><br>
                     {{ s.description | linebreaks }}
                 {% endfor %}
             </td>
